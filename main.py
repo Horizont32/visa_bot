@@ -126,7 +126,7 @@ driver.find_element(By.XPATH, '//input[@data-placeholder="Enter passport number"
 driver.find_element(By.ID, 'passportExpirtyDate').send_keys(config.get('AppointmentData', 'pex'))
 driver.find_element(By.XPATH, '//input[@data-placeholder="44"]').send_keys(config.get('AppointmentData', 'phonecode'))
 driver.find_element(By.XPATH, '//input[@data-placeholder="012345648382"]').send_keys(config.get('AppointmentData', 'phonenum'))
-driver.find_element(By.XPATH, '//input[@type="email"]').send_keys(config.get('AppointmentData', 'email'))
+driver.find_element(By.XPATH, '//input[@type="email"]').send_keys(config.get('LoginData', 'email'))
 
 
 save_btn = driver.find_element(By.XPATH, '//app-dynamic-control/div/div/div[2]/button').click()
