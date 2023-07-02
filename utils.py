@@ -62,6 +62,16 @@ return res
 
     return True
 
+def tryEx(type_of_ex):
+    def inner(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception:
+                pass
+        return wrapper
+    return inner
+
 if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('cfg.ini')
