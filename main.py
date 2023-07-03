@@ -30,8 +30,9 @@ driver = webdriver.Chrome()
 # driver = uc.Chrome()
 
 driver.maximize_window()
+wait = WebDriverWait(driver, 20)
 driver.get(URL)
-el = WebDriverWait(driver, 10).until(lambda p: p.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]'))
+el = wait.until(lambda p: p.find_element(By.XPATH, '//iframe[@title="reCAPTCHA"]'))
 print('wwqew')
 time.sleep(8)
 
@@ -76,6 +77,7 @@ time.sleep(2)
 # Unix-based driver implementation
 
 # WebDriverWait(driver, 10).until(lambda p: p.find_element(By.XPATH, '//div[@role="listbox"]/mat-option[@id="mat-option-6"]')).click()
+# WebDriverWait(driver, 10).until(lambda p: p.find_element(By.XPATH, '//*[contains(text(), "Moscow")]')).click()
 WebDriverWait(driver, 10).until(lambda p: p.find_element(By.XPATH, '//*[contains(text(), "Moscow")]')).click()
 
 
@@ -152,7 +154,7 @@ for date in dates:
 dates[-1].click()
 
 times = WebDriverWait(driver, 5).until(lambda p: p.find_elements(By.XPATH, '//input[@name="SlotRadio"]'))
-print([time_order.value for time_order in times])
+# print([time_order.value for time_order in times])
 times[-1].click()
 
 
@@ -192,7 +194,17 @@ disclaimer = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH
 driver.execute_script("arguments[0].click();", disclaimer)
 time.sleep(8)
 
+# Now we are at a payment page, so lets fill data
+driver.find_element(By.ID, 'pan_sub').send_keys(config.get('PaymentData', 'cardN'))
+driver.find_element(By.ID, 'cardholder').send_keys(config.get('PaymentData', 'cardholder'))
+driver.find_element(By.ID, 'cvc').send_keys(config.get('PaymentData', 'cardC'))
+select_month = driver.find_element(By.ID, 'month')
+Select(select_month).select_by_value(config.get('PaymentData', 'carddateM'))
+select_year = driver.find_element(By.ID, 'year')
+Select(select_year).select_by_value(config.get('PaymentData', 'carddateG'))
 
+time.sleep(3)
+driver.find_element(By.ID, 'buttonPayment').click()
 
 time.sleep(40)
 
